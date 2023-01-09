@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import Combine
 
-var landmarks: [Landmark] = load("landmarkData.json")
+final class ModelData: ObservableObject {
+    @Published var landmarks: [Landmark] = load("landmarkData.json")    //프로퍼티 값 변경을 알리는 @Published 속성
+}
 
 func load<T: Decodable>(_ filename: String) -> T {
     let data: Data
