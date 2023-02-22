@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct LandmarkList: View {
+    //모든 view에서 읽을수 있는 @EnvironmentObject 속성
     @EnvironmentObject var modelData: ModelData
-    //모든 view에서 읽을수 있는 @EnvironmentObject 속성, 값이 바뀔때 view 자동 update
-    @State private var showFavoriteOnly: Bool = false
+    
     //@State로 선언된 프로퍼티는 값이 변경되면 view를 다시 생성
+    @State private var showFavoriteOnly: Bool = false
     
     var filterdLandmarks: [Landmark] {    //연산 프로퍼티 읽기 전용
         modelData.landmarks.filter{ landmark in (landmark.isFavorite || !showFavoriteOnly ) }
@@ -19,21 +20,13 @@ struct LandmarkList: View {
     
     var body: some View {
         NavigationView {
-            /*List(filterdLandmarks) { landmark in
-                NavigationLink {    //destination
-                    LandmarkDetail(landmark: landmark)
-                } label: {
-                    LandmarkRow(landmark: landmark)
-                }
-            }
-            .navigationTitle("Landmarks")*/
             List {
                 Toggle(isOn: $showFavoriteOnly) {
-                    //State 프로퍼티에 접근(변경)하기 위한 $ prefix
+                    //State 프로퍼티와 binding을 위한 $ prefix
                     Text("Favorite only")
                 }
                 
-                //ForEach를 통해 배열 요소의 view를 생성한다.
+                //ForEach를 통해 배열 각 요소를 클로저에 적용한 결과를 반환
                 ForEach(filterdLandmarks) {landmark in
                     NavigationLink {
                         LandmarkDetail(landmark: landmark)
