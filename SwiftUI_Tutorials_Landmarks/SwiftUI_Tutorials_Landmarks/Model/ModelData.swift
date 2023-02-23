@@ -11,6 +11,16 @@ import Combine
 final class ModelData: ObservableObject {
     @Published var landmarks: [Landmark] = load("landmarkData.json")    //프로퍼티 값 변경을 알리는 @Published 속성
     var hikes: [Hike] = load("hikeData.json")
+    
+    var features: [Landmark] {
+        landmarks.filter{ $0.isFeatured }
+    }
+    
+    var categories: [String: [Landmark]] {
+        Dictionary (
+            grouping: landmarks, by: { $0.category.rawValue }     //landmarks 각 요소의 Array를 value로 하고 각 요소의 rawValue를 key로 하는 딕셔너리 생성
+        )
+    }
 }
 
 func load<T: Decodable>(_ filename: String) -> T {
