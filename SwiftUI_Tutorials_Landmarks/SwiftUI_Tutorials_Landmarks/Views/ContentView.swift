@@ -14,6 +14,7 @@ struct ContentView: View {
         case feature
         case list
     }
+    
     var body: some View {
         TabView(selection: $seletion) {
             LandmarkList()

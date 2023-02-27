@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct SwiftUI_Tutorials_LandmarksApp: App {
-    @StateObject private var modelData = ModelData()    //앱이 실행되는 동안 단 헌번 초기화 @StateObject
+    @StateObject private var modelData = ModelData()    //view의 생명 주기 동안 생성되는 인스턴스를 저장할 property wrapper 변수
     
     var body: some Scene {
         WindowGroup {

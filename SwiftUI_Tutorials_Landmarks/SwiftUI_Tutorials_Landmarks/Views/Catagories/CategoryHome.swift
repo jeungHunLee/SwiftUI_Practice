@@ -9,6 +9,8 @@ import SwiftUI
 
 struct CategoryHome: View {
     @EnvironmentObject var modelData: ModelData
+    @State private var showingProfile = false
+    
     var body: some View {
         NavigationView {
             List  {
@@ -17,7 +19,7 @@ struct CategoryHome: View {
                     .scaledToFill()    //parent view에 대하여 꽉 차게 배치
                     .frame(height: 200)
                     .clipped()    //프레임을 벗어나는 이미지 제거
-                    .listRowInsets(EdgeInsets())    //여백 0로 설정
+                    .listRowInsets(EdgeInsets())    //행의 여백 0로 설정
                 //Text(key)
                 ForEach(modelData.categories.keys.sorted(), id: \.self) { key in
                     CategoryRow(categoryName: key, items: modelData.categories[key]!)
@@ -25,9 +27,19 @@ struct CategoryHome: View {
                 .listRowInsets(EdgeInsets())    //여백 0로 설정
                 
             }
-                .navigationTitle("Featured")
+            .listStyle(.inset)
+            .navigationTitle("Featured")
+            .toolbar {
+                Button {
+                    showingProfile.toggle()
+                } label: {
+                    Label("User Profile", systemImage: "person.crop.circle")
+                }
+            }
+            .sheet(isPresented: $showingProfile) {
+                ProfileHost()
+            }
         }
-        //.scrollContentBackground(.hidden)
     }
 }
 
